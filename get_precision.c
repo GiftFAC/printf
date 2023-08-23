@@ -1,11 +1,15 @@
 #include "main.h"
-#include <ctype.h> // Include for is_digit function
+
+int is_digit(char c)
+{
+    return c >= '0' && c <= '9';
+}
 
 /**
  * get_precision - Calculates the precision for printing
  * @format: Formatted string in which to print the arguments
- * @i: Current position in the format string
- * @list: List of arguments.
+ * @i: List of arguments to be printed.
+ * @list: list of arguments.
  *
  * Return: Precision.
  */
@@ -19,9 +23,9 @@ int get_precision(const char *format, int *i, va_list list)
 
     precision = 0;
 
-    for (curr_i++; format[curr_i] != '\0'; curr_i++)
+    for (curr_i += 1; format[curr_i] != '\0'; curr_i++)
     {
-        if (isdigit(format[curr_i]))
+        if (is_digit(format[curr_i]))
         {
             precision *= 10;
             precision += format[curr_i] - '0';
@@ -33,13 +37,11 @@ int get_precision(const char *format, int *i, va_list list)
             break;
         }
         else
-        {
-            // Handle unexpected character (print an error or break gracefully)
             break;
-        }
     }
 
     *i = curr_i - 1;
 
     return precision;
 }
+
